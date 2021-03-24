@@ -14,18 +14,33 @@
             </div>
         </div>
         <img src="/img/Create.png" alt="Design Your Illustration" class="w-50">
-
-        <!-- <div class="card">
-          
-        </div> -->
       </div>
 
-       <div class="card container" style="width: 18rem;">
-         <div class="circle rounded-circle"></div>
+      &nbsp;
+
+      <div class="container d-flex mt-5">
+        <div class="card mr-auto">
+          <i class="align-self-center fas fa-download fa-5x circle rounded-icon1"/>
           <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h3 class="card-text">Download Free</h3>
           </div>
         </div>
+
+        <div class="card mr-auto">
+         <i class="align-self-center fas fa-fingerprint fa-5x circle rounded-icon2"/>
+          <div class="card-body">
+            <h3 class="card-text">Unique and Creative</h3>
+          </div>
+        </div>
+
+        <div class="card">
+         <i class="align-self-center fas fa-pencil-ruler fa-5x circle rounded-icon3"></i>
+          <div class="card-body">
+            <h3 class="card-text">Customisable</h3>
+          </div>
+        </div>
+      </div>
+      
 
     </div>
 </template>
@@ -41,16 +56,44 @@ export default {
 <style lang="scss" scoped>
   @import '../../sass/variables';
 
-  // .circle{
-    
-  // }
+  .card{
+    border:none;
+    background-color: transparent;
+  }
+
+  .card-text{
+    font-family: $bold-font;
+    color: $primary-font;
+  }
+
+  .circle{
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    color: white;
+    line-height: 135px;
+    background-repeat: no-repeat;
+    background-size: 150px 140px;
+
+    &.rounded-icon1{
+      background-image: url(/img/Ellipse9.svg);
+    }
+
+     &.rounded-icon2{
+      background-image: url(/img/Ellipse11.svg);
+    }
+
+     &.rounded-icon3{
+      background-image: url(/img/Ellipse12.svg);
+    }
+  }
 
   img{
      width: 40%;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
   }
   
   .main-font{
-    font-family: $primary-font;
+    font-family: $bold-font;
     font-size: 35px;
     font-weight: 500;
     letter-spacing: 4px;

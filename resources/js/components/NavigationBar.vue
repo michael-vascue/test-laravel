@@ -3,7 +3,7 @@
         <h3 class="header-title pt-4">Illus Dream</h3>
 
         <div class="ml-auto mt-4" role="group">
-            <button type="button" class="btn btn-default">Home</button>
+            <button type="button" class="btn btn-default"><router-link to="/dashboard">Home</router-link></button>
             <button type="button" class="btn btn-default">Illustration Gallery</button>
             <button type="button" class="btn btn-default">Create Illustration</button>
             <button type="button" class="btn btn-default">Sign Up</button> 
@@ -14,7 +14,13 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        // methods: {
+        //     redirectToHome() {
+        //         this.$router.push({ path: '/dashboard' });
+        //     },
+        // }
+    }
 </script>
 
 <style lang="scss" scoped>
@@ -29,6 +35,8 @@
         font-size: 16px;
         font-weight: 500;
     }
+    
+    
 
 </style>
 

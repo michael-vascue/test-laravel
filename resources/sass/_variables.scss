@@ -28,9 +28,16 @@ $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
 $primary-font: "Trebuchet MS", sans-serif;
+$bold-font: "Trebuchet MS Bold", sans-serif;
 
 @font-face {
     font-family: 'Trebuchet MS';
     src:url('/fonts/Trebuchet-MS/Trebuchet-MS.ttf');
+    font-weight:400;
+}
+
+@font-face {
+    font-family: 'Trebuchet MS Bold';
+    src:url('/fonts/Trebuchet-MS/Trebuchet-MS-Bold.ttf');
     font-weight:400;
 }
