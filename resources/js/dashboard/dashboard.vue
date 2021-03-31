@@ -1,6 +1,6 @@
 <template>
     <div>
-      <navigation-bar></navigation-bar>
+      <!-- <navigation-bar></navigation-bar> -->
       <div class="container d-flex mt-4">
         <div class="flex-column w-50 align-self-center">
             <div class="main-font">
@@ -18,7 +18,7 @@
 
       &nbsp;
 
-      <div class="container d-flex mt-5">
+      <div class="container d-flex mt-5 pt-4">
         <div class="card mr-auto">
           <i class="align-self-center fas fa-download fa-5x circle rounded-icon1"/>
           <div class="card-body">
@@ -63,7 +63,7 @@ export default {
 
   .card-text{
     font-family: $bold-font;
-    color: $primary-font;
+    color: $primary-color;
   }
 
   .circle{

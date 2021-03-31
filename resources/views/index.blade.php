@@ -9,6 +9,7 @@
    
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <title>Illus Dream</title>
 
         <div id="app">
             {{-- <navigation-bar></navigation-bar> --}}
@@ -21,10 +22,10 @@
     <script src="{{asset('/js/app.js')}}"></script>
 </html>
 
-@section('content')
+{{-- @section('content')
 <h1>This is a vue component</h1>
  <div id="app">
   <router-view></router-view>
  </div>
  <script src="/js/app.js"></script>
-@endsection
+@endsection --}}

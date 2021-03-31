@@ -14,20 +14,23 @@ use App\Http\Controllers\DashboardController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/dashboard', [DashboardController::class, 'getDashboard'])->name('dashboard');
+
+Auth::routes();
+
+Route::get('/', function () {return view('welcome');});
+
+Route::get('/dashboard', [DashboardController::class, 'getDashboard'])->name('dashboard');
+// Route::get('/signup', function () {return view('register');});
 // Route::get('/new', [DashboardController::class, 'getNew'])->name('new');
 
-Route::get('/dashboard/{vue_capture?}', function () {
-    return view('index');
-   })->where('vue_capture', '[\/\w\.-]*');
+// Route::get('/dashboard/{vue_capture?}', function () {
+//     return view('index');
+//    })->where('vue_capture', '[\/\w\.-]*');
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-// Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::get('{slug}',function(){
 //     return view('welcome');
