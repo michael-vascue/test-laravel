@@ -1,8 +1,8 @@
 <template>
     <div>
         <!-- <a @click.prevent="show" class="nav-link" href="/#signup">Sign In</a> -->
-        <button @click.prevent="show" type="button" class="nav-button btn btn1 btn-default" style="padding-top:9px">Sign In</button>
-        <modal name="login" :width="500" :height="500" styles="border-radius:71px">
+        <button @click.prevent="show" type="button" class="nav-button btn btn1 btn-default" style="padding-top:8px">Sign In</button>
+        <modal name="login" :adaptive="true" :width="420" :height="390" styles="border-radius:45px">
             <!-- <div class="container">
                 <div>
                     <h6 class="msg-title">LOG IN TO YOUR ACCOUNT</h6>
@@ -23,27 +23,54 @@
                 </div>
                
             </div> -->
-           <div class="container px-4 py-5 mx-auto">
-                <div class="card card0">
+           <div class="container px-4 py-4 mx-auto">
+                <div class="card">
                     <div class="d-flex flex-lg-row flex-column-reverse">
-                        <div class="card card1">
+                        <div class="card">
                             <div slot="top-right">
-                                <button @click="$modal.hide('login')" class="btn1" style="float: right">
+                                <button @click="$modal.hide('login')" class="btn1 pr-2" style="float: right">
                                     <i class="fas fa-window-close fa-2x"></i>
                                 </button>
                             </div> 
-                            <div class="row justify-content-center"> 
-                                <div class="col-md-8 col-10">                                               
-                                    <h5 class="msg-info text-center">LOG IN TO YOUR ACCOUNT</h5>
-                                    <div class="form-group"><input type="text" id="email" name="email" placeholder="Enter your email address" class="form-control"> </div>
-                                    <div class="form-group"><input type="password" id="psw" name="psw" placeholder="Enter your password" class="form-control"> </div>
-                                    <div class="row justify-content-center my-3 px-3"> <button class="main-btn btn1 btn-block btn-color">LOG IN</button> </div>        
-                                </div>
+                        <!-- alert if any error -->
+                    
+                            <form class="row justify-content-center"
+                                autocomplete="off" 
+                                @submit.prevent="login" 
+                            > 
+                            <div class="form-group row" v-if="authError">
+                                <p class="error">
+                                    {{authError}}
+                                </p>
                             </div>
+
+                                <div class="col-md-10 col-10">                                               
+                                    <h5 class="msg-info text-center">LOG IN TO YOUR ACCOUNT</h5>
+                                    <div class="form-group">
+                                        <input name="email" placeholder="Enter your email address" class="form-control" 
+                                            type="email"
+                                            id="email" 
+                                            v-model="formLogin.email"
+                                            required
+                                        > 
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="psw" placeholder="Enter your password" class="form-control"
+                                            type="password"
+                                            id="password"
+                                            v-model="formLogin.password"
+                                            required
+                                        > 
+                                    </div>
+                                    <div class="row justify-content-center my-3 px-3"> 
+                                        <button type="submit" class="main-btn btn1 btn-block btn-color">LOG IN</button>
+                                    </div>        
+                                </div>
+                            </form>
                             <div class="bottom">
-                                <div href="#" class="d-flex sm-text mx-auto col-md-8 px-2">
+                                <div class="d-flex sm-text ml-4 col-md-8">
                                     <div class="bottom-text">New to Illus Dream?</div> 
-                                    <button class="main-btn btn2 btn-white ml-2">Sign Up</button>
+                                    <button class="main-btn btn2 btn-white" @click.prevent="showSignup">Sign Up</button>
                                 </div>
                             </div>
                         </div>
@@ -55,17 +82,57 @@
 </template>
 
 <script>
+import {login} from'../auth';
+
     export default {
 
+         data() {
+            return {
+                formLogin: {
+                    email: '',
+                    password: '',
+                },
+                error: null
+            }
+        },
+
         methods:{
-          show(){
-            this.$modal.show('login');
-            
-          },
-          hide(){
-            this.$modal.hide('login');
-          }
-        }
+            show(){
+                this.$modal.show('login');
+            },
+
+            showSignup(){
+                this.$modal.show('register');
+                this.$modal.hide('login');
+            },
+
+            hide(){
+                this.$modal.hide('login');
+            },
+
+            login(){
+                this.$store.dispatch('login');
+                login(this.$data.formLogin)
+                    .then(res => {
+                        this.$store.commit("loginSuccess", res);
+                        this.$modal.hide('login');
+                    })
+                    .catch(error => {
+                        this.$store.commit("loginFailed", {error});
+                        })
+                    }
+            },
+
+        computed:{
+            authError(){
+                return this.$store.getters.authError
+            },
+            registeredUser(){
+                return this.$store.getters.registeredUser
+            }
+        },
+
+          mounted (){}
       
     };
     
@@ -80,7 +147,7 @@
 
     .bottom-text{
         color: $secondary-color;
-        font-family: $primary-font;
+        font-family: $bold-font;
     }
 
     button{
@@ -165,30 +232,26 @@
 
     .card {
         border-radius: 0;
-        border: none
-    }
-
-    .card1 {
+        border: none;
         width: 100%;
-        
     }
 
     .heading {
         margin-bottom: 60px !important
     }
 
-    // ::placeholder {
-    //     color: #000 !important;
-    //     opacity: 1
-    // }
+    ::placeholder {
+        color: #000 !important;
+        opacity: 0.5
+    }
 
-    // :-ms-input-placeholder {
-    //     color: #000 !important
-    // }
+    :-ms-input-placeholder {
+        color: $primary-color !important
+    }
 
-    // ::-ms-input-placeholder {
-    //     color: #000 !important
-    // }
+    ::-ms-input-placeholder {
+        color: $primary-color !important
+    }
 
     .form-control-label {
         font-size: 12px;
@@ -219,15 +282,16 @@
 
     .btn-white {
         // border-radius: 50px;
-        color: $primary-color;
+        color: $quinary-color;
         background-color: none;
         // padding: 8px 40px;
         cursor: pointer;
         border: none;
+        text-decoration: underline;
     }
 
     .btn-white:hover {
-        color: #fff;
+        color: $quartery-color;
         background-image: none;
 
     a {

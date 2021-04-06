@@ -1,33 +1,36 @@
-import VueRouter from 'vue-router';
-import Vue from 'vue'
+// import VueRouter from 'vue-router';
+// import Vue from 'vue'
 
-import dashboard from './dashboard/dashboard.vue'
+import dashboard from './dashboard/dashboard.vue';
 import login from './account/Login.vue'
+import register from './account/Register.vue'
 
-Vue.use(VueRouter);
 
-// export const routes = [
-//     { path: '/dashboard', component: dashboard, name: 'dashboard' },
-//     { path: '/dashboard/new', component: newnew, name: 'newnew'},
+// Vue.router = router;
+// Vue.use(VueRouter);
 
-// ];
+// const router = new VueRouter({
+//     history:true,
+//     mode: 'history',
+//     routes,
+// });
 
+//Routes
 export const routes = [
-    { path: '/dashboard', component: dashboard, name: 'dashboard'},
-    // { path: '/dashboard/new', component: newnew, name: 'newnew'},
-    { path: '/signin', component: login, name: 'login'},
+    { path: '/dashboard', component: dashboard, name: 'dashboard', meta: {auth: true}},
+    { path: '/signin', component: login, name: 'login', meta: {auth: false}},
+    { path: '/register', component: register, name: 'register', meta: {auth: false}},
 
     // Default Path
-
     { path: '*', redirect: '/dashboard' }
 
 ];
 
-const router = new VueRouter({
-    routes
-})
 
-// export default router;
+
+
+
+
 
 // module.exports = {
 //     routes: [

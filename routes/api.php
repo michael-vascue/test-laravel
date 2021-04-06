@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+
+// use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +16,29 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
+// Route::prefix('jwt.auth')->group(function () {
+//     Route::post('register', 'App\Http\Controllers\AuthController@register');
+//     Route::post('login', 'App\Http\Controllers\AuthController@login');
+// });
+
+// Route::group(['middleware' => [ 'jwt', 'jwt.auth']], function () {
+//     Route::post('register', [AuthController::class, 'register']);
+//     Route::post('login', [AuthController::class, 'login']);
+
+// });
+
+// Route::group(['prefix' => 'auth'], function ($router) {
+//     Route::post('register', [AuthController::class, 'register']);
+//     Route::post('login', [AuthController::class, 'login']);
+//  });
+
+// Route::post('register', [AuthController::class, 'register']);
+
+//basic route
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+

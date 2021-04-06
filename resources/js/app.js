@@ -1,13 +1,34 @@
-import App from './App.vue';
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import { routes } from './router.js';
-import vmodal from 'vue-js-modal';
-
 require('./bootstrap');
 
+import 'es6-promise/auto';
+import VueRouter from 'vue-router';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+import App from './App.vue';
+import vmodal from 'vue-js-modal';
+import Vue from 'vue';
+import Vuex from 'vuex';
+import { ValidationProvider} from 'vee-validate/dist/vee-validate.full.esm';
+import { ValidationObserver} from 'vee-validate';
+import * as rules from 'vee-validate/dist/rules';
+import { routes } from './router.js';
+import storeData from './store';
+
+
+
+
+// installation
 Vue.use(VueRouter);
+Vue.use(Vuex);
 Vue.use(vmodal);
+
+
+// Set Vue authentication
+Vue.use(VueAxios, axios);
+axios.defaults.baseURL = 'http://localhost:8000/';
+// window.Promise = require('es6-promise').Promise;
+
+const store = new Vuex.Store(storeData);
 
 const router = new VueRouter({ 
     mode: 'history',
@@ -15,29 +36,26 @@ const router = new VueRouter({
 });
 
 
-
-// window.Vue = require('vue').default;
-
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+
+//vee-validation components
+// Vue.component('ValidationProvider', ValidationProvider);
+// Vue.component('ValidationObserver', ValidationObserver);
 
 //components
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('navigation-bar', require('./components/NavigationBar.vue').default);
 
 Vue.component('dashboard', require('./dashboard/dashboard.vue').default);
-// Vue.component('login', require('./account/Login.vue').default);
-// Vue.component('')
+Vue.component('register', require('./account/Register.vue').default)
+ 
 
-
-// const app = new Vue({
-//     el: '#app',
-//     router,
-// });
-
+//Load Index
 window.Vue = new Vue({
     el: '#app',
+    store,
     router,
     render: h => h(App),
 })

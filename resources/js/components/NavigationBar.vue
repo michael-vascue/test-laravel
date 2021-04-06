@@ -2,18 +2,17 @@
     <div class="container d-flex">
         <h3 class="header-title pt-4">Illus Dream</h3>
 
-        <div class="ml-auto mt-3 d-flex" role="group">
+        <!-- <div class="ml-auto mt-3 d-flex" role="group">
             <button @click="() => $router.push('*')" type="button" class="nav-button btn btn-default">Home</button>
             <button type="button" class="nav-button btn btn-default">Illustration Gallery</button>
-            <button type="button" class="nav-button btn btn-default">Create Illustration</button>
+            <button type="button" class="nav-button btn btn-default">Create Illustration</button> -->
             <!-- <button @click="() => $router.push('/signin')" type="button" class="nav-button btn btn-default">Sign In</button>  -->
             <!-- <button @click="onClick" type="button" class="nav-button btn btn-default">Sign In</button>  -->
-            <login/>
-        
-        
-        </div>
+            <!-- <login/>
+            <register/>
+        </div> -->
 
-        <!-- <nav class="navbar navbar-expand-lg ml-auto p-0 mt-3">
+        <nav class="navbar navbar-expand-lg ml-auto p-0 mt-3">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -25,22 +24,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Create Illustration</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/signup">Sign Up</a>
-                        <a class="nav-link" :href="$router.resolve({name:'SignUp'}).href">Sign Up</a>
-                        <button @click="() => $router.push('/signup')" class="nav-button">Sign Up</button>
+                     <li class="nav-item">
+                        <login/>
+                        <register/>
                     </li>
                 </ul>
             </div>    
-        </nav> -->
+        </nav>
     </div>
 </template>
 
 <script>
 import login from '../account/Login.vue';
+import register from '../account/Register.vue';
     export default {
         components:{
-            login
+            login,
+            register
         },
 
         data(){
@@ -50,9 +50,7 @@ import login from '../account/Login.vue';
         },
 
         methods: {
-            onRowClick(params) {
-            this.$modal.show('hello-world');
-            }
+           
         }
 
 
@@ -67,12 +65,12 @@ import login from '../account/Login.vue';
         color: $primary-color;
     }
 
-    a{
-        font-size: 16px;
+    a, router-link{
+        font-size: 18px;
         font-weight: 500;
         color:$primary-color;
         transition: all 150ms ease-in-out;
-        padding-left: 1.5rem !important;
+        padding-left: 1.5rem;
 
         &:hover{
             color:$secondary-color;
@@ -95,7 +93,7 @@ import login from '../account/Login.vue';
         }
 
         &:focus{
-            box-shadow: none!important;
+            box-shadow: none;
         }
     }
 

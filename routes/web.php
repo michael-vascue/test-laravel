@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Auth;
 
 
 /*
@@ -20,13 +21,15 @@ Auth::routes();
 Route::get('/', function () {return view('welcome');});
 
 Route::get('/dashboard', [DashboardController::class, 'getDashboard'])->name('dashboard');
+
+
+
 // Route::get('/signup', function () {return view('register');});
 // Route::get('/new', [DashboardController::class, 'getNew'])->name('new');
 
 // Route::get('/dashboard/{vue_capture?}', function () {
 //     return view('index');
 //    })->where('vue_capture', '[\/\w\.-]*');
-
 
 
 
