@@ -1,6 +1,8 @@
+import { setAuthorization } from "./general";
+
 export function registerUser(credentials){
   return new Promise((res,rej)=>{
-      axios.post('/api/register', credentials)
+      axios.post('/api/auth/register', credentials)
       .then(response => {
           res(response.data);
       })
@@ -12,15 +14,18 @@ export function registerUser(credentials){
 
 export function login(credentials){
   return new Promise((res,rej)=>{
-      axios.post('/api/login', credentials)
+      axios.post('/api/auth/login', credentials)
       .then(response => {
-          res(response.data);
+            setAuthorization(response.data.access_token);
+            res(response.data);
       })
       .catch(err => {
           rej('Wrong Email/Password combination.')
       })
   })
 }
+
+
 
 export function getLoggedinUser(){
   const userStr = localStorage.getItem('user');

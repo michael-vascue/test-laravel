@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- <a @click.prevent="show" class="nav-link" href="/#signup">Sign In</a> -->
-        <button @click.prevent="show" type="button" class="nav-button btn btn1 btn-default" style="padding-top:8px">Sign In</button>
+        <!-- <button @click.prevent="show" type="button" class="nav-button btn btn1 btn-default" style="padding:8px">Sign In</button> -->
         <modal name="login" :adaptive="true" :width="420" :height="390" styles="border-radius:45px">
             <!-- <div class="container">
                 <div>
@@ -82,17 +82,20 @@
 </template>
 
 <script>
-import {login} from'../auth';
+import { login } from'../auth';
 
     export default {
-
+        name: "Login",
+        
          data() {
+       
             return {
                 formLogin: {
                     email: '',
                     password: '',
                 },
-                error: null
+                error: null,
+               
             }
         },
 
@@ -112,10 +115,15 @@ import {login} from'../auth';
 
             login(){
                 this.$store.dispatch('login');
+                
                 login(this.$data.formLogin)
                     .then(res => {
                         this.$store.commit("loginSuccess", res);
                         this.$modal.hide('login');
+                        swal({
+                            icon: "success",
+                            text: "Login Succesfully!",
+                        });
                     })
                     .catch(error => {
                         this.$store.commit("loginFailed", {error});
@@ -131,6 +139,8 @@ import {login} from'../auth';
                 return this.$store.getters.registeredUser
             }
         },
+
+        // props: ['open'],
 
           mounted (){}
       

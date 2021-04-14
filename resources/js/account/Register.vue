@@ -68,7 +68,7 @@
                                                     id="confirm_password"
                                                     v-model="formRegister.password_confirmation"                                               
                                                 >
-                                                <span class="error-messsage">{{ errors[0] }}</span>
+                                                <span lass="error-messsage">{{ errors[0] }}</span>
                                             </ValidationProvider>                                               
                                         </div>
 
@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import {registerUser} from '../auth';
+import { registerUser } from '../auth';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate/dist/vee-validate.full';
 
     extend("confirmedBy", {
@@ -198,6 +198,11 @@ import { ValidationProvider, ValidationObserver, extend } from 'vee-validate/dis
         padding: 12px 16px;
         font-size: 16px;
         border-radius: 5px;
+    }
+
+    span{
+        font-size: 12px;
+        color: red;
     }
 
     .nav-button{

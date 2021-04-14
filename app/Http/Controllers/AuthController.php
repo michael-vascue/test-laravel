@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Requests\RegisterFormRequest;
 use JWTAuth;
+// use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
-// use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,11 +23,11 @@ class AuthController extends Controller
     {
  
          $validator = Validator::make($request->all(), 
-                      [ 
+                    [ 
                       'name' => 'required',
                       'email' => 'required|email',
                       'password' => 'required',  
-                    //   'c_password' => 'required|same:password', 
+                 
                      ]);  
  
          if ($validator->fails()) {  
@@ -65,10 +64,12 @@ class AuthController extends Controller
             ], Response::HTTP_UNAUTHORIZED);
         }
   
-        return response()->json([
-            'success' => true,
-            'token' => $jwt_token,
-        ]);
+        // return response()->json([
+        //     'success' => true,
+        //     'token' => $jwt_token,
+        // ]);
+
+        return $this->respondWithToken($jwt_token);
     }
 
     public function logout(Request $request)
@@ -91,6 +92,11 @@ class AuthController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function me()
+    {
+        return response()->json(JWTAuth::user());
+    }
   
     public function getUser(Request $request)
     {
@@ -102,6 +108,38 @@ class AuthController extends Controller
   
         return response()->json(['user' => $user]);
     }
+
+      /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(JWTAuth::refresh());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'user' => $this->guard()->user(),
+            'token_type' => 'bearer',
+            'expires_in' => JWTAuth::factory()->getTTL() * 60
+        ]);
+    }
+
+    public function guard() {
+        return Auth::Guard('api');
+    }
+
 }
     
 

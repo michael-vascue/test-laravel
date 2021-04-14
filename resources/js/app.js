@@ -10,17 +10,16 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { ValidationProvider} from 'vee-validate/dist/vee-validate.full.esm';
 import { ValidationObserver} from 'vee-validate';
-import * as rules from 'vee-validate/dist/rules';
 import { routes } from './router.js';
 import storeData from './store';
-
-
+import swal from 'sweetalert';
 
 
 // installation
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(vmodal);
+// Vue.use(swal);
 
 
 // Set Vue authentication
@@ -29,11 +28,15 @@ axios.defaults.baseURL = 'http://localhost:8000/';
 // window.Promise = require('es6-promise').Promise;
 
 const store = new Vuex.Store(storeData);
+const Swal = swal;
 
 const router = new VueRouter({ 
     mode: 'history',
     routes 
 });
+
+window.axios = axios;
+window.eventBus = new Vue({})
 
 
 // const files = require.context('./', true, /\.vue$/i)
@@ -49,13 +52,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('navigation-bar', require('./components/NavigationBar.vue').default);
 
 Vue.component('dashboard', require('./dashboard/dashboard.vue').default);
-Vue.component('register', require('./account/Register.vue').default)
+
+// Vue.component('register', require('./account/Register.vue').default)
  
 
 //Load Index
 window.Vue = new Vue({
     el: '#app',
     store,
+    Swal,
     router,
     render: h => h(App),
 })
