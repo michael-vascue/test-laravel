@@ -13,6 +13,7 @@ import { ValidationObserver} from 'vee-validate';
 import { routes } from './router.js';
 import storeData from './store';
 import swal from 'sweetalert';
+import {initialize} from './general';
 
 
 // installation
@@ -24,14 +25,15 @@ Vue.use(vmodal);
 
 // Set Vue authentication
 Vue.use(VueAxios, axios);
-axios.defaults.baseURL = 'http://localhost:8000/';
+// axios.defaults.baseURL = 'http://localhost:8000/';
+axios.defaults.baseURL = 'http://illusdream.test/'
 // window.Promise = require('es6-promise').Promise;
 
 const store = new Vuex.Store(storeData);
 const Swal = swal;
 
 const router = new VueRouter({ 
-    mode: 'history',
+    mode: 'hash',
     routes 
 });
 
@@ -53,8 +55,7 @@ Vue.component('navigation-bar', require('./components/NavigationBar.vue').defaul
 
 Vue.component('dashboard', require('./dashboard/dashboard.vue').default);
 
-// Vue.component('register', require('./account/Register.vue').default)
- 
+initialize(store, router);
 
 //Load Index
 window.Vue = new Vue({

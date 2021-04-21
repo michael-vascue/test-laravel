@@ -20,10 +20,15 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::post('/me', [AuthController::class, 'me']);
+    Route::get('/userprofile', [AuthController::class, 'userProfile']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    // Route::get('/update', [AuthController::class, 'updateProfile']);
+    // Route::put('/update-profile',  [AuthController::class, 'updateProfile']);
 });
 
+// Route::group(['middleware' => 'auth.jwt'], function () {
+//     Route::post('logout', [AuthController::class, 'logout']);
+// });
 
 // Route::group(['middleware' => 'auth.jwt'], function () {
  

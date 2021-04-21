@@ -13,7 +13,7 @@ class DashboardController extends Controller
         // return $this->success();
     }
 
-    public function getNew(){
+    public function getProfile(){
         // return view('index');
 
         return $this->success();

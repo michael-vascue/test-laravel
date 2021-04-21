@@ -1,14 +1,17 @@
 <?php
 
+
 namespace App\Http\Controllers;
 use JWTAuth;
-// use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
+use App\Http\Requests\Users\UpdateProfileRequest;
 
 class AuthController extends Controller
 {
@@ -40,7 +43,6 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
-  
         if ($this->token) {
             return $this->login($request);
         }
@@ -93,9 +95,59 @@ class AuthController extends Controller
         }
     }
 
-    public function me()
+    //update user profile
+    // public function updateProfile(UpdateProfileRequest $request)
+    // {
+    //     $user = Auth::user();
+    //     $jwt_token = auth('api')->tokenById($user->id);
+
+    //     $input = $request->all();
+
+        
+    //     if ($jwt_token) {
+    //         // $user = Auth::user();
+    //         // $users = $user->user;
+    //         $user->name = $request->input('name', '');
+    //         $user->email = $request->input('email', '');
+    //         $user->save();
+    //     }
+    //     // $user->update($request->all());
+     
+    //     // return ['message' => 'Updated the user info'];
+    //     return $this->respondWithToken($jwt_token);
+        
+    // }
+
+    public function updateProfile(UpdateProfileRequest $request)
     {
-        return response()->json(JWTAuth::user());
+        DB::transaction(function() use ($request){
+            $user = Auth::user();
+            dd($user);
+            //updte user profile
+            $user->name = $request->input('name','');
+            $user->email = $request->input('email','');
+            $user->save();
+        });
+
+        // $user->update([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        // ]);
+        return ['message' => 'Updated the user info sucessfully!'];
+    }
+
+    public function userProfile()
+    {
+        // return response()->json(auth()->user());
+        $user = auth('api')->user();
+        $token = auth('api')->tokenById($user->id);
+
+        return response([
+            'user' => $user,
+            'token' => $token
+        ]);
+
+        // return $this->respondWithToken($token);
     }
   
     public function getUser(Request $request)
@@ -109,23 +161,15 @@ class AuthController extends Controller
         return response()->json(['user' => $user]);
     }
 
-      /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+      
+    //   Refresh a token.
     public function refresh()
     {
         return $this->respondWithToken(JWTAuth::refresh());
     }
 
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+  
+    // Get the token array structure
     protected function respondWithToken($token)
     {
         return response()->json([

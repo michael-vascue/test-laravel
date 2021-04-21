@@ -2,23 +2,13 @@
     <div class="container d-flex pt-2">
         <h3 class="header-title pt-4">Illus Dream</h3>
 
-        <!-- <div class="ml-auto mt-3 d-flex" role="group">
-            <button @click="() => $router.push('*')" type="button" class="nav-button btn btn-default">Home</button>
-            <button type="button" class="nav-button btn btn-default">Illustration Gallery</button>
-            <button type="button" class="nav-button btn btn-default">Create Illustration</button> -->
-            <!-- <button @click="() => $router.push('/signin')" type="button" class="nav-button btn btn-default">Sign In</button>  -->
-            <!-- <button @click="onClick" type="button" class="nav-button btn btn-default">Sign In</button>  -->
-            <!-- <login/>
-            <register/>
-        </div> -->
-
         <nav class="navbar navbar-expand-lg ml-auto p-0 mt-3">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item" @click="pageActive($route.path)">
                         <!-- <a class="nav-link" aria-current="page" href="/dashboard">Home</a> -->
                         <div class="nav-link">
-                            <router-link class="link" to="/dashboard" :class="[(page == '/dashboard') ? 'active':'']">Home</router-link>
+                            <router-link class="link" to="/" :class="[(page == '/') ? 'active':'']">Home</router-link>
                         </div>
                     </li>
                     <li class="nav-item" @click="pageActive($route.path)">
@@ -32,31 +22,49 @@
                         </div>
                     </li>
                     <div>
-                        <li class="nav-item" v-if="!currentUser">
-                            <button @click.prevent="showModal" type="button" class="nav-button btn btn1 btn-default" style="padding:8px">Sign In</button>
-                            <login ref="loginModal"></login>
-                            <register/>
-                        </li>
-                        <li class="nav-item"  v-else>
-                            <div class="btn-group">
-                                <button type="button" class="btn dropdown-toggle p-0 dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img class="profile" src="/img/profile.jpg" alt="">
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right menu mt-3 border-0 shadow" style="width: 2.7in;">
-                                    <div class="d-flex user-info">
-                                        <img class="profile" src="/img/profile.jpg" alt="">
-                                        <div class="flex-column align-self-center pl-3">
-                                            <div class="text text-break" style="font-size:18px">{{currentUser.name}}</div>
-                                            <div class="text text-break" style="color: #47988F; font-size: 13px">{{currentUser.email}}</div>
+                        <template v-if="!currentUser">
+                            <li class="nav-item" >
+                                <button @click.prevent="showModal" type="button" class="nav-button btn btn1 btn-default" style="padding:8px">Sign In</button>
+                                <login ref="loginModal"></login>
+                                <register/>
+                            </li>
+                        </template>
+                        <template v-else>
+                            <li class="nav-item">
+                                <div class="btn-group">
+                                    <button type="button" class="btn dropdown-toggle p-0 dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div>
+                                            <template v-if="!currentUser.profile_image_url" >
+                                                <img class="profile" src="/img/default.png" alt="">
+                                            </template>
+                                            <template v-else>
+                                                <div class="profile">{{currentUser.profile_image_url}}</div>
+                                            </template>
                                         </div>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right menu mt-3 border-0 shadow" style="width: 2.7in;">
+                                        <div class="d-flex user-info">
+                                            <div>
+                                                <template v-if="!currentUser.profile_image_url" >
+                                                    <img class="profile" src="/img/default.png" alt="">
+                                                </template>
+                                                <template v-else>
+                                                    <div class="profile">{{currentUser.profile_image_url}}</div>
+                                                </template>
+                                            </div>
+                                            <div class="flex-column align-self-center pl-3">
+                                                <div class="text text-break" style="font-size:18px">{{currentUser.name}}</div>
+                                                <div class="text text-break" style="color: #47988F; font-size: 13px">{{currentUser.email}}</div>
+                                            </div>
+                                        </div>
+                                        <hr class="my-2"/>
+                                        <button class="dropdown-item" type="button" @click.prevent="goProfile">My Profile</button>
+                                        <button class="dropdown-item" type="button">My Illustrations</button>
+                                        <button class="dropdown-item" type="button" @click.prevent="logout" >Sign Out</button>
                                     </div>
-                                    <hr class="my-2"/>
-                                    <button class="dropdown-item" type="button">My Profile</button>
-                                    <button class="dropdown-item" type="button">My Illustrations</button>
-                                    <button class="dropdown-item" type="button" @click.prevent="logout" >Sign Out</button>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        </template>
                     </div>
                 </ul>
             </div>    
@@ -67,7 +75,7 @@
 <script>
 import login from '../account/Login.vue';
 import register from '../account/Register.vue';
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
 
     export default {
         components:{
@@ -78,8 +86,7 @@ import { mapGetters } from 'vuex';
         data(){
             return{
                 page: this.$route.path ,  // for first load and in current path
-                username: ''
-               
+                username: '',
             }
         },
 
@@ -113,6 +120,10 @@ import { mapGetters } from 'vuex';
             },
             showModal () {
                 this.$refs.loginModal.show()
+            },
+
+            goProfile () {
+                this.$router.push('/profile'); 
             }
 
 
@@ -158,6 +169,10 @@ import { mapGetters } from 'vuex';
             
     }
 
+    .blur-content{
+        filter: blur(5px); 
+    }
+
     .dropdown{
         width: 50px;
         height: 50px;
@@ -187,10 +202,6 @@ import { mapGetters } from 'vuex';
     .header-title, button, a, .text{
         font-family: $primary-font;
         color: $primary-color;
-    }
-
-    img{
-         box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     }
 
     .link{
@@ -234,13 +245,15 @@ import { mapGetters } from 'vuex';
         width: 50px;
         height: 50px;
         border-radius: 50%;
+        box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+
     }
 
     @media (min-width: 1200px) {
       .container{
           max-width: 1200px;
       }
-  }
+    }
 
 </style>
 

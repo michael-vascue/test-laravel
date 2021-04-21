@@ -1,28 +1,7 @@
 <template>
     <div>
-        <!-- <a @click.prevent="show" class="nav-link" href="/#signup">Sign In</a> -->
         <!-- <button @click.prevent="show" type="button" class="nav-button btn btn1 btn-default" style="padding:8px">Sign In</button> -->
         <modal name="login" :adaptive="true" :width="420" :height="390" styles="border-radius:45px">
-            <!-- <div class="container">
-                <div>
-                    <h6 class="msg-title">LOG IN TO YOUR ACCOUNT</h6>
-                    <form action="#" method="post">
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" class="border" ref="email" placeholder="Enter your email address">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" id="password" name="password" class="border" ref="email" placeholder="Enter your password">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="px-4 py-2 rounded">LOG IN</button>
-                        </div>
-                        <div>
-                            <p>New to Illus Dream?<a href="#">Sign Up</a></p>
-                        </div>
-                    </form>
-                </div>
-               
-            </div> -->
            <div class="container px-4 py-4 mx-auto">
                 <div class="card">
                     <div class="d-flex flex-lg-row flex-column-reverse">
@@ -115,7 +94,7 @@ import { login } from'../auth';
 
             login(){
                 this.$store.dispatch('login');
-                
+
                 login(this.$data.formLogin)
                     .then(res => {
                         this.$store.commit("loginSuccess", res);
@@ -150,10 +129,6 @@ import { login } from'../auth';
 
 <style lang="scss" scoped>
     @import '../../sass/variables';
-
-    .blur-content{
-        filter: blur(5px); 
-    }
 
     .bottom-text{
         color: $secondary-color;
