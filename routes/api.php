@@ -30,6 +30,7 @@ Route::group(['prefix' => 'auth'], function ($router) {
 //     Route::post('logout', [AuthController::class, 'logout']);
 // });
 
+
 // Route::group(['middleware' => 'auth.jwt'], function () {
  
    

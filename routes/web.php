@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\IllustrationGalleryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 
@@ -23,6 +24,7 @@ Route::get('/', function () {return view('welcome');});
 
 
 Route::put('/update-profile',  [AuthController::class, 'updateProfile']);
+Route::get('/illustration', [IllustrationGalleryController::class, 'getIllustrationGallery']);
 
 
 

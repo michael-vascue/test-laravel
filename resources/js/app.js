@@ -1,4 +1,5 @@
 require('./bootstrap');
+// require('../sass/app.scss');
 
 import 'es6-promise/auto';
 import VueRouter from 'vue-router';

@@ -4,20 +4,17 @@
           <navigation-bar></navigation-bar>
           <router-view></router-view>
         </div>
-        <!-- <Login  :show="showModal()" @close="toggleModal()"></Login> -->
        
     </div>
 </template>
 
 <script>
 import NavigationBar from './components/NavigationBar.vue';
-// import Login from './account/Login.vue';
 
   export default {
     name: 'app',
     components: { 
-      NavigationBar,
-      // Login 
+      NavigationBar, 
     },
 
     // data(){
