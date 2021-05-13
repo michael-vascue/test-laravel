@@ -8,13 +8,14 @@ import VueAxios from 'vue-axios';
 import App from './App.vue';
 import vmodal from 'vue-js-modal';
 import Vue from 'vue';
+import vuetify from './plugins/vuetify' // path to vuetify export
 import Vuex from 'vuex';
 import { ValidationProvider} from 'vee-validate/dist/vee-validate.full.esm';
 import { ValidationObserver} from 'vee-validate';
 import { routes } from './router.js';
 import storeData from './store';
 import swal from 'sweetalert';
-import {initialize} from './general';
+// import {initialize} from './general';
 
 
 // installation
@@ -22,7 +23,7 @@ Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(vmodal);
 // Vue.use(swal);
-
+ 
 
 // Set Vue authentication
 Vue.use(VueAxios, axios);
@@ -53,16 +54,18 @@ window.eventBus = new Vue({})
 //components
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('navigation-bar', require('./components/NavigationBar.vue').default);
+Vue.component('create-nav-bar', require('./components/CreateNavBar.vue').default);
 
 Vue.component('dashboard', require('./dashboard/dashboard.vue').default);
 
-initialize(store, router);
+// initialize(store, router);
 
 //Load Index
 window.Vue = new Vue({
     el: '#app',
     store,
     Swal,
+    vuetify,
     router,
     render: h => h(App),
 })

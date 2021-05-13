@@ -42,7 +42,7 @@
                                         > 
                                     </div>
                                     <div class="row justify-content-center my-3 px-3"> 
-                                        <button type="submit" class="main-btn btn1 btn-block btn-color">LOG IN</button>
+                                        <button type="submit" class="main-btn btn1 btn-block btn-color">SIGN IN</button>
                                     </div>        
                                 </div>
                             </form>

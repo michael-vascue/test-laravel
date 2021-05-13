@@ -123,8 +123,6 @@ class AuthController extends Controller
     {
         DB::transaction(function() use ($request){
             $user = Auth::user();
-            dd($user);
-            //updte user profile
             $user->name = $request->input('name','');
             $user->email = $request->input('email','');
             $user->save();

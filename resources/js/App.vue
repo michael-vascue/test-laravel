@@ -1,10 +1,7 @@
 <template>
     <div>
-        <div>
-          <navigation-bar></navigation-bar>
-          <router-view></router-view>
-        </div>
-       
+      <navigation-bar></navigation-bar>
+      <router-view></router-view>  
     </div>
 </template>
 
@@ -16,28 +13,7 @@ import NavigationBar from './components/NavigationBar.vue';
     components: { 
       NavigationBar, 
     },
-
-    // data(){
-    //   return{
-    //     activeModal:0,
-    //   }
-    // },
-
-    // methods: {
-    //         showModal: function() {
-    //             return this.activeModal === id 
-    //         },
-    //         toggleModal: function () {
-    //             if(this.activeModal !== 0) {
-    //                 this.activeModal = 0
-    //                 return false
-    //             }
-    //             this.activeModal = id
-    //         }
-    //     }
   };
 </script>
 
-<style lang="scss" scoped>
 
-</style>

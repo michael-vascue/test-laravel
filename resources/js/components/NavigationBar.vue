@@ -1,7 +1,6 @@
 <template>
-    <div class="container d-flex pt-2">
+    <div v-if="$route.path !='/createillus'" class="container d-flex pt-2">
         <h3 class="header-title pt-4">Illus Dream</h3>
-
         <nav class="navbar navbar-expand-lg ml-auto p-0 mt-3">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -16,9 +15,14 @@
                             <router-link class="link" to="/gallery" :class="[(page == '/gallery') ? 'active':'']">Illustration Gallery</router-link>
                         </div>
                     </li>
-                    <li class="nav-item" @click.prevent="beforeCreate($route.path)">
+                    <!-- <li class="nav-item" @click.prevent="beforeCreate($route.path)">
                         <div class="nav-link">
                             <router-link class="link" to="#" :class="[(page == '/createillus') ? 'active':'']">Create Illustration</router-link>
+                        </div>
+                    </li> -->
+                     <li class="nav-item" @click.prevent="beforeCreate()">
+                        <div class="nav-link">
+                            <router-link class="link" to="#">Create Illustration</router-link>
                         </div>
                     </li>
                     <div>
@@ -59,7 +63,7 @@
                                         </div>
                                         <hr class="my-2"/>
                                         <button class="dropdown-item" type="button" @click.prevent="goProfile">My Profile</button>
-                                        <button class="dropdown-item" type="button">My Illustrations</button>
+                                        <button class="dropdown-item" type="button" @click.prevent="goMyIllust">My Illustrations</button>
                                         <button class="dropdown-item" type="button" @click.prevent="logout" >Sign Out</button>
                                     </div>
                                 </div>
@@ -70,6 +74,8 @@
             </div>    
         </nav>
     </div>
+
+    
 </template>
 
 <script>
@@ -100,11 +106,9 @@ import register from '../account/Register.vue';
                             icon: "success",
                             text: "You logout sucessfully!",
                 })
-                // this.$router.push('/login');
             },
-            beforeCreate (e) {
+            beforeCreate () {
                 if (!this.$store.state.isLoggedin) {
-                    // this.$router.push({ name: 'login' })
                     swal({
                             icon: "warning",
                             text: "You are required to Login first before create the illustration!",
@@ -112,8 +116,8 @@ import register from '../account/Register.vue';
                     .then( res => {    
                         this.$refs.loginModal.show(res);
                     })
-                }else{
-                    this.page = e;
+                }
+                else{
                     this.$router.push('/createillus');
                     
                 }
@@ -124,7 +128,12 @@ import register from '../account/Register.vue';
 
             goProfile () {
                 this.$router.push('/profile'); 
+            },
+
+            goMyIllust () {
+                this.$router.push('/my_illust');
             }
+
 
 
         },
@@ -137,11 +146,6 @@ import register from '../account/Register.vue';
                 return this.$store.getters.currentUser
             },
 
-
-
-            //  ...mapGetters([
-            //     'currentUser',
-            // ]),
         },
 
        

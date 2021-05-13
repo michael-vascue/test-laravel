@@ -82,7 +82,7 @@
                             <div class="bottom">
                                 <div href="#" class="d-flex sm-text ml-4 col-md-8">
                                     <div class="bottom-text">Already signed up?</div> 
-                                    <button @click.prevent="showLogin" class="main-btn btn2 btn-white" >Log In</button>
+                                    <button @click.prevent="showLogin" class="main-btn btn2 btn-white" >Sign In</button>
                                 </div>
                             </div>
                         </div>

@@ -47,7 +47,6 @@
 
 <script>
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate/dist/vee-validate.full';
-import { updateUser } from '../auth';
 
 export default {
 
@@ -73,8 +72,6 @@ export default {
         },
 
     created () {
-        // this.getUser();
-        // this.userForm = Object.assign({}, this.$store.getters.currentUser)
         this.userForm = JSON.parse(JSON.stringify(this.$store.getters.currentUser));
     
 
@@ -114,20 +111,21 @@ export default {
         },
 
         updateProfile () {
-        axios.put('/update-profile',
-            {
-                name: this.userForm.name,    
-                email: this.userForm.email,
-            })
-            .then(response => {
-                this.userForm.name = response.data.name;
-                this.userForm.email = response.data.email; 
-                swal({
-                    icon: "success",
-                    text: "Update Succesfully!",
-                });   
-            })
-        }
+            const token = localStorage.getItem('token')
+            axios.put('/update-profile', 
+                {
+                    name: this.userForm.name,    
+                    email: this.userForm.email,
+                })
+                .then(response => {
+                    this.userForm.name = response.data.name;
+                    this.userForm.email = response.data.email; 
+                    swal({
+                        icon: "success",
+                        text: "Update Succesfully!",
+                    });   
+                })
+            }
     }
 
 }

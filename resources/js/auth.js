@@ -1,4 +1,4 @@
-import { setAuthorization } from "./general";
+// import { setAuthorization } from "./general";
 
 export function registerUser(credentials){
   return new Promise((res,rej)=>{
