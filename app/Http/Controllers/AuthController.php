@@ -96,29 +96,6 @@ class AuthController extends Controller
         }
     }
 
-    //update user profile
-    // public function updateProfile(UpdateProfileRequest $request)
-    // {
-    //     $user = Auth::user();
-    //     $jwt_token = auth('api')->tokenById($user->id);
-
-    //     $input = $request->all();
-
-        
-    //     if ($jwt_token) {
-    //         // $user = Auth::user();
-    //         // $users = $user->user;
-    //         $user->name = $request->input('name', '');
-    //         $user->email = $request->input('email', '');
-    //         $user->save();
-    //     }
-    //     // $user->update($request->all());
-     
-    //     // return ['message' => 'Updated the user info'];
-    //     return $this->respondWithToken($jwt_token);
-        
-    // }
-
     public function updateProfile(UpdateProfileRequest $request)
     {
         DB::transaction(function() use ($request){
@@ -127,17 +104,15 @@ class AuthController extends Controller
             $user->email = $request->input('email','');
             $user->save();
         });
-
-        // $user->update([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        // ]);
         return ['message' => 'Updated the user info sucessfully!'];
+        // return response()->json(['user' => $user]);
+        // return response([
+        //     'user' => $user,
+        // ]);
     }
 
     public function userProfile()
     {
-        // return response()->json(auth()->user());
         $user = auth('api')->user();
         $token = auth('api')->tokenById($user->id);
 

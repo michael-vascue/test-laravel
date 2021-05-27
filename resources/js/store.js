@@ -62,25 +62,17 @@ export default {
         registerFailed(state, payload){
             state.reg_error = payload.error;
         },
-        // update(state, payload) {
-        //     state.currentUser = payload.data;      
-        // }
+        update(state, payload) {
+            state.currentUser = payload.data;      
+        }
     },
     actions: {
         login(context){
             context.commit("login");
         },
-        // updateUser(context) {
-        //     const token = localStorage.getItem('token')
-        //     axios.put('/api/auth/update-profile', {
-        //         headers: 
-        //         {
-        //           Authorization: `Bearer ${token}`
-        //         }
-        //     })
-        //     .then((response) => {
-        //         context.commit('update', response.data);
-        //     })
+        // update(context){
+        //     // state.currentUser.update(context);
         // }
+
     }
 };

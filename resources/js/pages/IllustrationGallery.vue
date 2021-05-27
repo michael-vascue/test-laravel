@@ -38,7 +38,7 @@
         </div>
      
         <div class="row" style="margin-top:3rem">
-            <div class="column" v-for="item in filterIllustrations" >
+            <div class="column" v-for="item in filterIllustrations" :key="item.id">
                 <div class="card" style="width: 21rem;height: 21rem">
                     <div class="card-body">
                         <h5 class="card-title text2" :style="{color:color}">{{item.name}}</h5>

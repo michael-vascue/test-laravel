@@ -54,6 +54,11 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    public function illustrations()
+    {
+        return $this->hasMany('\App\Models\Illustration');
+    }
+
 
     // public function setPasswordAttribute($password)
     // {

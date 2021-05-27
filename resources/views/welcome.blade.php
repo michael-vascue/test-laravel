@@ -11,4 +11,5 @@
         </div>
     </body>
     <script src="{{mix('/js/app.js')}}"></script>
+    {{-- <script src="//daybrush.com/moveable/release/latest/dist/moveable.min.js"></script> --}}
 </html>

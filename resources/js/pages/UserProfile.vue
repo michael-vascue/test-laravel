@@ -8,12 +8,12 @@
                         <div class="d-flex py-4">
                             <!-- <img class="profile" src="/img/profile.jpg" alt="" > -->
                             <div>
-                                <template v-if="!currentUser.profile_image_url" >
+                                <!-- <template v-if="!currentUser.profile_image_url" > -->
                                     <img class="profile" src="/img/default.png" alt="">
-                                </template>
-                                <template v-else>
+                                <!-- </template> -->
+                                <!-- <template v-else>
                                     <div class="profile">{{currentUser.profile_image_url}}</div>
-                                </template>
+                                </template> -->
                             </div>
                             <div class="my-auto ml-5">
                                 <button type="submit" class="btn upload text"><i class="fas fa-upload fa-sm pr-2"></i>Upload new picture</button>
@@ -47,6 +47,7 @@
 
 <script>
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate/dist/vee-validate.full';
+// import { getUser } from'../auth';
 
 export default {
 
@@ -73,8 +74,6 @@ export default {
 
     created () {
         this.userForm = JSON.parse(JSON.stringify(this.$store.getters.currentUser));
-    
-
     },
 
     computed: {          
@@ -83,21 +82,9 @@ export default {
         },
     },
 
-   
     methods: {
-        //  updateProfile (){
-        //     this.$store.dispatch('updateUser'); 
-        //     var _this = this;
-        //         // ajax call to POST this.profile then
-        //     _this.$store.commit('update', 
-        //         {
-        //             // name: 'currentUser',
-        //             data: this.userForm
-        //         })
-        // },
-
         getUser (){
-            const token = localStorage.getItem('token')
+            const token = this.$store.getters.currentUser.token
             axios.get('/api/auth/userprofile',{
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -105,18 +92,23 @@ export default {
             })
             .then(response => {
                 this.userForm= response.data.user;
-                // this.userForm.email = response.data.user.email;
-
             })
         },
 
         updateProfile () {
-            const token = localStorage.getItem('token')
-            axios.put('/update-profile', 
+            const token = this.$store.getters.currentUser.token
+            // console.log(this.$store.getters.currentUser.token)
+            axios.put('/api/auth/update-profile', 
                 {
-                    name: this.userForm.name,    
-                    email: this.userForm.email,
-                })
+                name: this.userForm.name,    
+                email: this.userForm.email,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json" // add content-type
+                }
+            })
                 .then(response => {
                     this.userForm.name = response.data.name;
                     this.userForm.email = response.data.email; 
@@ -124,8 +116,9 @@ export default {
                         icon: "success",
                         text: "Update Succesfully!",
                     });   
+                    this.$store.commit('update', { data: response.data });
                 })
-            }
+        }
     }
 
 }
