@@ -1,7 +1,23 @@
 <template>
     <div>
-      <!-- <navigation-bar></navigation-bar> -->
-      <div class="container d-flex mt-4">
+      <!----- mobile view ----->
+      <div class="container flex-column mt-1 text-center"  v-if="mobileView">
+        <img src="/img/Create.png" alt="Design Your Illustration" class="img-mobile">
+        <div class="flex-column align-self-center">
+            <div class="main-font">
+              <div style="color: #264D59">CUSTOMISABLE</div>
+              <div style="color: #43978D">ILLUSTRATION GALLERY</div>
+            </div>
+            <div class="sub-font mt-3" style="color: #D46C4E">
+              <div>Create your own unique illustration,</div>
+              <div>download free and beautiful</div>
+              <div>illustration to complete your project</div>
+            </div>
+        </div>
+      </div>
+      
+      <!----- not mobile view ----->
+      <div class="container d-flex mt-4" v-if="!mobileView">
         <div class="flex-column w-50 align-self-center">
             <div class="main-font">
               <div style="color: #264D59">CUSTOMISABLE</div>
@@ -17,8 +33,32 @@
       </div>
 
       &nbsp;
+      <!----- mobile view ----->
+      <div class="container flex-column mt-2" v-if="mobileView">
+        <div class="card mr-auto">
+          <i class="align-self-center fas fa-download fa-5x circle rounded-icon1"/>
+          <div class="card-body">
+            <h3 class="card-text text-center">Download Free</h3>
+          </div>
+        </div>
 
-      <div class="container d-flex mt-5 pt-4">
+        <div class="card mr-auto">
+         <i class="align-self-center fas fa-fingerprint fa-5x circle rounded-icon2"/>
+          <div class="card-body">
+            <h3 class="card-text text-center">Unique and Creative</h3>
+          </div>
+        </div>
+
+        <div class="card">
+         <i class="align-self-center fas fa-pencil-ruler fa-5x circle rounded-icon3"></i>
+          <div class="card-body">
+            <h3 class="card-text text-center">Customisable</h3>
+          </div>
+        </div>
+      </div>
+
+      <!----- not mobile view ----->
+      <div class="container d-flex mt-5 pt-4" v-if="!mobileView">
         <div class="card mr-auto">
           <i class="align-self-center fas fa-download fa-5x circle rounded-icon1"/>
           <div class="card-body">
@@ -40,8 +80,6 @@
           </div>
         </div>
       </div>
-      
-
     </div>
 </template>
 
@@ -49,7 +87,22 @@
 import NavigationBar from '../components/NavigationBar.vue';
 export default {
   components: { NavigationBar },
- 
+  data() {
+          return {
+            mobileView: true,
+          }
+      },
+
+    methods: {
+       handleView() {
+          this.mobileView = window.innerWidth <= 995;
+        }
+    },
+
+    created() {
+        this.handleView();
+        window.addEventListener('resize', this.handleView);
+      }
 };
 </script>
 
@@ -90,6 +143,10 @@ export default {
 
   img{
      width: 40%;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+  }
+
+  .img-mobile{
+    width: 100%;
   }
   
   .main-font{

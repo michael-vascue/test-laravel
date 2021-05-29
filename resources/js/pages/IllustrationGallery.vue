@@ -1,6 +1,47 @@
 <template>
     <div class="container">
-        <div class="d-flex">
+        <!----- mobile view ----->
+        <div class="flex-column" v-if="mobileView">
+            <div class="d-flex">
+                <div class="col-7 m-0 p-0 align-self-center" >
+                    <div class="d-flex text search-mobile" style="max-width:500px; min-width:300px">
+                            <input type="text" v-model="search" placeholder="Search..." name="search2">
+                            <div class="align-self-center"><i class="fa fa-search fa-lg pl-2" style="color: #47988f"></i></div>
+                    </div>
+                </div>
+                <div class="d-flex col-5 justify-content-end m-0 p-0 pr-2">
+                    <div class="color pl-5 pt-1">
+                        <v-swatches
+                            v-model="color"
+                            popover-x="left"
+                            show-fallback
+                            fallback-input-type="color"
+                            shapes="circles"
+                            :swatch-style="{ padding: '1px 0'}"
+                            :trigger-style="{ width: '30px', height: '30px' }"
+                        ></v-swatches>
+                    </div>
+                    <div class="align-self-center ml-4">
+                        <button class="order" @click="sort('name')" :class="[sortBy === 'name' ? sortDirection : '']">
+                            <!-- <i class="fas fa-sort-alpha-down fa-2x"></i> -->
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="selectwrap selectwrap-mobile">
+                    <select v-model="category" class="custom-select text2 select-mobile" aria-label="Default select example" style="font-size: 18px">
+                        <!-- <option  v-for="category in categories" class="mx-auto" >{{category}}</option> -->
+                        <option class="mx-auto" value="All" selected>All</option>
+                        <option value="Analytics">Analytics</option>
+                        <option value="Food and Beverage">Food and Beverage</option>
+                        <option value="Environment">Environment</option>
+                        <option value="Sport">Sport</option>
+                    </select>
+            </div>
+        </div>
+
+        <!----- not mobile view ----->
+        <div class="d-flex" v-if="!mobileView">
             <div class="col-7 m-0 p-0 align-self-center">
                 <div class="d-flex text search" style="max-width:500px; min-width:300px">
                         <input  type="text" v-model="search" placeholder="Search..." name="search2">
@@ -37,7 +78,26 @@
             </div>
         </div>
      
-        <div class="row" style="margin-top:3rem">
+        <!----- mobile view ----->
+        <div class="row column-mobile" style="margin-top:1rem" v-if="mobileView">
+            <div class="column" v-for="item in filterIllustrations" :key="item.id">
+                <div class="card" style="width: 21rem;height: 21rem">
+                    <div class="card-body">
+                        <h5 class="card-title text2" :style="{color:color}">{{item.name}}</h5>
+                        <span class="center" :style="defaultColor" v-html="item.illustration_svg"></span>
+                    </div>
+                    <div class="text-center card-overlay">
+                        <div class="download-btn">
+                            <button class="btn mr-4 text3"><i class="fas fa-download fa-sm pr-2"></i>PNG</button>
+                            <button class="btn text3"><i class="fas fa-download fa-sm pr-2"></i>SVG</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!----- not mobile view ----->
+         <div class="row column-web" style="margin-top:3rem" v-if="!mobileView">
             <div class="column" v-for="item in filterIllustrations" :key="item.id">
                 <div class="card" style="width: 21rem;height: 21rem">
                     <div class="card-body">
@@ -76,6 +136,7 @@ export default {
             sortBy: 'name',
             sortDirection: 'asc',
             allSelected: false,
+            mobileView: true,
 
         }
     },
@@ -95,6 +156,10 @@ export default {
             }
             this.sortBy = s;
         },
+
+        handleView() {
+          this.mobileView = window.innerWidth <= 995;
+        }
 
        
     },
@@ -156,7 +221,11 @@ export default {
 
     mounted () {
         this.loadIllustration();
+        this.handleView();
+        window.addEventListener('resize', this.handleView);
     }
+
+    
 }
 </script>
  
@@ -241,10 +310,16 @@ export default {
     }
 
     /* Three image containers (use 25% for four, and 50% for two, etc) */
-    .column {
+    .column-web .column {
         float: left;
         width: 33.33%;
         padding: 30px 0px;
+    }
+
+    .column-mobile .column{
+        float: left;
+        width: 51%;
+        padding: 20px 0px;
     }
 
     .row{
@@ -298,6 +373,22 @@ export default {
         }
     }
 
+    .search-mobile input[type=text] {
+        padding: 5px;
+        font-size: 18px;
+        border: 1px solid $secondary-color;
+        float: left;
+        width: 70%;
+        background: white;
+        height: 35px;
+        border-radius: 5px;
+
+        &::placeholder{
+            color: #C3C3C3;
+            padding-left: 7px;
+        }
+    }
+
     // .search button {
     //     float: left;
     //     width: 10%;
@@ -324,9 +415,21 @@ export default {
         display: table;
     }
 
+    .select-mobile option{
+        font-size: 18px
+       
+    }
+
     .form-select{
         background: none;
         border: none;
+    }
+
+    .selectwrap-mobile{
+        margin-top: 10px;
+        border: 1px solid $secondary-color;
+        border-radius: 5px;
+        height: 35px;
     }
 
     .selectwrap select{
@@ -340,6 +443,7 @@ export default {
         background-repeat:no-repeat;
         background-size: 10px;
         padding-right: 30px;
+        padding-top: 0px;
     }
 
     select, option{

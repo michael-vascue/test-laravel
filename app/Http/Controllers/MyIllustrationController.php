@@ -18,7 +18,8 @@ class MyIllustrationController extends Controller
         //     ]);
         //     $illus->save();
         // }
-        $userId = Auth::user()->id;
+        // $userId = Auth::user()->id;
+        $userId = 1;
 
         $illus = new MyIllustration();
         $illus->user_id = $userId;

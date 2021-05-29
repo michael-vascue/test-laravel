@@ -55,6 +55,7 @@ window.eventBus = new Vue({})
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('navigation-bar', require('./components/NavigationBar.vue').default);
 Vue.component('create-nav-bar', require('./components/CreateNavBar.vue').default);
+Vue.component('navigation-mobile', require('./components/NavigationMobile.vue').default);
 
 Vue.component('dashboard', require('./dashboard/dashboard.vue').default);
 

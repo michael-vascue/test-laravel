@@ -1,7 +1,47 @@
 <template>
     <div class="container" style="padding-top:25px">
         <div class="main-font">My Profile</div>
-        <div class="d-flex row">
+
+        <!----- mobile view ----->
+        <div class="flex-column row" v-if="mobileView">
+            <div style="text-align:center">
+                <img class="bg-img-mobile" src="/img/profile-bg.png" alt="">
+            </div>
+            <div class="col-6">
+                <ValidationObserver v-slot="{ handleSubmit }">
+                    <form @submit.prevent="handleSubmit(updateProfile)">
+                        <div class="d-flex py-4">
+                            <div>
+                                <img class="profile" src="/img/default.png" alt="">
+                            </div>
+                            <div class="my-auto ml-5">
+                                <button type="submit" class="btn upload text"><i class="fas fa-upload fa-sm pr-2"></i>Upload new picture</button>
+                            </div>
+                        </div>
+                        <div class="form-group col-10 p-0 m-0">
+                            <ValidationProvider name="Name" rules="required|alpha" v-slot="{ errors }">
+                                <label  class="text">Name</label>
+                                <input type="text" id="name" class="form-control form-text" placeholder="Enter your username" v-model="userForm.name">
+                                <span class="error-messsage">{{ errors[0] }}</span>
+                            </ValidationProvider>
+                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+                        <div class="form-group col-10 p-0 m-0 mt-4">
+                            <ValidationProvider name="E-mail" rules="required|email" v-slot="{ errors }">
+                                <label class="text">Email</label>
+                                <input type="email" id="email"  class="form-control form-text" placeholder="Enter email" v-model="userForm.email">
+                                <span class="error-messsage">{{ errors[0] }}</span>
+                            </ValidationProvider>
+                        </div>
+                        <button type="submit" class="btn col-10 p-o save-but">SAVE CHANGES</button>
+                    </form>
+                </ValidationObserver>
+            </div>
+            
+        </div>
+
+        <!----- not mobile view ----->
+        <div class="d-flex row" v-if="!mobileView">
             <div class="col-6">
                 <ValidationObserver v-slot="{ handleSubmit }">
                     <form @submit.prevent="handleSubmit(updateProfile)">
@@ -62,7 +102,7 @@ export default {
                 name: '',
                 email: '',  
             },
-            
+            mobileView: true,
             error: null,
         }
     },
@@ -74,6 +114,8 @@ export default {
 
     created () {
         this.userForm = JSON.parse(JSON.stringify(this.$store.getters.currentUser));
+        this.handleView();
+        window.addEventListener('resize', this.handleView);
     },
 
     computed: {          
@@ -118,6 +160,10 @@ export default {
                     });   
                     this.$store.commit('update', { data: response.data });
                 })
+        },
+
+        handleView() {
+          this.mobileView = window.innerWidth <= 995;
         }
     }
 
@@ -130,6 +176,11 @@ export default {
     .bg-img{
         width: 7in;
         float: right;
+    }
+
+    .bg-img-mobile{
+        width: 3in;
+        // float: right;
     }
 
     .form-control{

@@ -1,85 +1,78 @@
 <template>
-    <div>
-        <div class="navigation-icon" v-if="mobileView">
-            <i class="fas fa-bars"></i>
-        </div>
-        <div v-if="!mobileView">
-            <div v-if="$route.path !='/createillus'" class="container d-flex pt-2"> 
-                <h3 class="header-title pt-4">Illus Dream</h3>
-                <nav class="navbar navbar-expand-lg ml-auto p-0 mt-3">
-                        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li class="nav-item" @click="pageActive($route.path)">
-                                    <!-- <a class="nav-link" aria-current="page" href="/dashboard">Home</a> -->
-                                    <div class="nav-link">
-                                        <router-link class="link" to="/" :class="[(page == '/') ? 'active':'']">Home</router-link>
-                                    </div>
-                                </li>
-                                <li class="nav-item" @click="pageActive($route.path)">
-                                    <div class="nav-link">
-                                        <router-link class="link" to="/gallery" :class="[(page == '/gallery') ? 'active':'']">Illustration Gallery</router-link>
-                                    </div>
-                                </li>
-                                <!-- <li class="nav-item" @click.prevent="beforeCreate($route.path)">
+    <div v-if="$route.path !='/createillus'" class="container d-flex pt-2"> 
+        <h3 class="header-title pt-4">Illus Dream</h3>
+        <nav class="navbar navbar-expand-lg ml-auto p-0 mt-3">
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item" @click="pageActive($route.path)">
+                        <!-- <a class="nav-link" aria-current="page" href="/dashboard">Home</a> -->
+                        <div class="nav-link">
+                            <router-link class="link" to="/" :class="[(page == '/') ? 'active':'']">Home</router-link>
+                        </div>
+                    </li>
+                    <li class="nav-item" @click="pageActive($route.path)">
+                        <div class="nav-link">
+                            <router-link class="link" to="/gallery" :class="[(page == '/gallery') ? 'active':'']">Illustration Gallery</router-link>
+                        </div>
+                    </li>
+                    <!-- <li class="nav-item" @click.prevent="beforeCreate($route.path)">
                                     <div class="nav-link">
                                         <router-link class="link" to="#" :class="[(page == '/createillus') ? 'active':'']">Create Illustration</router-link>
                                     </div>
                                 </li> -->
-                                <li class="nav-item" @click.prevent="beforeCreate()">
-                                    <div class="nav-link">
-                                        <router-link class="link" to="#">Create Illustration</router-link>
-                                    </div>
-                                </li>
-                                <div>
-                                    <template v-if="!currentUser">
-                                        <li class="nav-item" >
-                                            <button @click.prevent="showModal" type="button" class="nav-button btn btn1 btn-default" style="padding:8px">Sign In</button>
-                                            <login ref="loginModal"></login>
-                                            <register/>
-                                        </li>
-                                    </template>
-                                    <template v-else>
-                                        <li class="nav-item">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn dropdown-toggle p-0 dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <div>
-                                                        <template v-if="!currentUser.profile_image_url" >
-                                                            <img class="profile" src="/img/default.png" alt="">
-                                                        </template>
-                                                        <template v-else>
-                                                            <div class="profile">{{currentUser.profile_image_url}}</div>
-                                                        </template>
-                                                    </div>
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-right menu mt-3 border-0 shadow" style="width: 2.7in;">
-                                                    <div class="d-flex user-info">
-                                                        <div>
-                                                            <template v-if="!currentUser.profile_image_url" >
-                                                                <img class="profile" src="/img/default.png" alt="">
-                                                            </template>
-                                                            <template v-else>
-                                                                <div class="profile">{{currentUser.profile_image_url}}</div>
-                                                            </template>
-                                                        </div>
-                                                        <div class="flex-column align-self-center pl-3">
-                                                            <div class="text text-break" style="font-size:18px">{{currentUser.name}}</div>
-                                                            <div class="text text-break" style="color: #47988F; font-size: 13px">{{currentUser.email}}</div>
-                                                        </div>
-                                                    </div>
-                                                    <hr class="my-2"/>
-                                                    <button class="dropdown-item" type="button" @click.prevent="goProfile">My Profile</button>
-                                                    <button class="dropdown-item" type="button" @click.prevent="goMyIllust">My Illustrations</button>
-                                                    <button class="dropdown-item" type="button" @click.prevent="logout" >Sign Out</button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </template>
-                                </div>
-                            </ul>
+                    <li class="nav-item" @click.prevent="beforeCreate()">
+                        <div class="nav-link">
+                            <router-link class="link" to="#">Create Illustration</router-link>
                         </div>
-                </nav>
+                    </li>
+                    <div>
+                        <template v-if="!currentUser">
+                            <li class="nav-item" >
+                                <button @click.prevent="showModal" type="button" class="nav-button btn btn1 btn-default" style="padding:8px">Sign In</button>
+                                <login ref="loginModal"></login>
+                                <register/>
+                            </li>
+                        </template>
+                        <template v-else>
+                            <li class="nav-item">
+                                <div class="btn-group">
+                                    <button type="button" class="btn dropdown-toggle p-0 dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div>
+                                            <template v-if="!currentUser.profile_image_url" >
+                                                            <img class="profile" src="/img/default.png" alt="">
+                                            </template>
+                                            <template v-else>
+                                                <div class="profile">{{currentUser.profile_image_url}}</div>
+                                            </template>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right menu mt-3 border-0 shadow" style="width: 2.7in;">
+                                        <div class="d-flex user-info">
+                                            <div>
+                                                <template v-if="!currentUser.profile_image_url" >
+                                                    <img class="profile" src="/img/default.png" alt="">
+                                                </template>
+                                                <template v-else>
+                                                    <div class="profile">{{currentUser.profile_image_url}}</div>
+                                                </template>
+                                            </div>
+                                            <div class="flex-column align-self-center pl-3">
+                                                <div class="text text-break" style="font-size:18px">{{currentUser.name}}</div>
+                                                <div class="text text-break" style="color: #47988F; font-size: 13px">{{currentUser.email}}</div>
+                                            </div>
+                                        </div>
+                                        <hr class="my-2"/>
+                                        <button class="dropdown-item" type="button" @click.prevent="goProfile">My Profile</button>
+                                        <button class="dropdown-item" type="button" @click.prevent="goMyIllust">My Illustrations</button>
+                                        <button class="dropdown-item" type="button" @click.prevent="logout" >Sign Out</button>
+                                    </div>
+                                </div>                        
+                            </li>
+                        </template>
+                    </div>
+                </ul>
             </div>
-        </div>
+        </nav>
     </div>
 </template>
 
@@ -98,10 +91,6 @@ import register from '../account/Register.vue';
             return{
                 page: this.$route.path ,  // for first load and in current path
                 username: '',
-                mobileView: false,
-                showNav: false,
-                mobileView: true,
-                showNav: false,
             }
         },
 
@@ -142,14 +131,12 @@ import register from '../account/Register.vue';
             goMyIllust () {
                 this.$router.push('/my_illust');
             },
-            handleView() {
-                this.mobileView = window.innerWidth <= 1000;
-            }
+            // handleView() {
+            //     this.mobileView = window.innerWidth <= 1000;
+            // }
         },
 
-        mounted() {
-            this.handleView();
-        },
+       
 
          computed: {
             isLogged(){ 
@@ -161,11 +148,6 @@ import register from '../account/Register.vue';
 
         },
 
-       
-
-        mounted() {
-            // this.beforeCreate();
-        }
     }
 </script>
 
@@ -180,6 +162,7 @@ import register from '../account/Register.vue';
         background-repeat: no-repeat;
         padding-bottom: 10px; /* this can also control the position */
     }
+    
     button{
         font-size: 18px;
         font-weight: 500;
@@ -200,7 +183,6 @@ import register from '../account/Register.vue';
             border: 0;
             box-shadow: none;
         }
-        
     }
 
     .dropdown-item:focus{
@@ -264,23 +246,6 @@ import register from '../account/Register.vue';
         border-radius: 50%;
         box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
 
-    }
-
-    .navigation-icon {
-        padding: 10px 10px 20px;
-        margin-right: 10px;
-        cursor: pointer;
-
-        i {
-            font-size: 2rem;
-            color: $primary-color;
-        }
-    }
-
-    @media (min-width: 1200px) {
-      .container{
-          max-width: 1200px;
-      }
     }
 
 </style>

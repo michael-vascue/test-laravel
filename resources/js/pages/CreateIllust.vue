@@ -402,7 +402,8 @@ export default {
 
         save() {
             const postData = {
-                data: this.board.workspace
+                'illustration_svg': this.board.workspace,
+                'name': this.board.name,
             }
             axios.post('/new-illustration', postData
             // {
