@@ -406,9 +406,6 @@ export default {
                 'name': this.board.name,
             }
             axios.post('/new-illustration', postData
-            // {
-            //     userID: this.userID,
-            // }
             ).then(response => {
                 // this.workspace = response.data.workspace
                 swal({
