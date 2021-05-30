@@ -143,7 +143,7 @@ export default {
 
     methods: {
         loadIllustration() {
-            axios.get('/illustration')
+            axios.get('/api/illustration')
                 .then(response =>{
                     this.items = response.data.illustrations
                     this.categories = response.data.svg_category

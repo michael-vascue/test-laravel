@@ -405,8 +405,11 @@ export default {
                 'illustration_svg': this.board.workspace,
                 'name': this.board.name,
             }
-            axios.post('/new-illustration', postData
-            ).then(response => {
+            axios.post('/api/illustration', postData, {
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            } ).then(response => {
                 // this.workspace = response.data.workspace
                 swal({
                     icon: "success",

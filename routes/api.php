@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MyIllustrationController;
+use App\Http\Controllers\IllustrationGalleryController;
 
 // use App\Http\Controllers\AuthController;
 
@@ -23,6 +25,11 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::get('/userprofile', [AuthController::class, 'userProfile']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::put('/update-profile',  [AuthController::class, 'updateProfile']);
+});
+
+Route::group(['prefix' => 'illustration'], function ($router) { 
+    Route::post('/',  [MyIllustrationController::class, 'saveIllus']);
+    Route::get('/', [IllustrationGalleryController::class, 'getIllustrationGallery']);
 });
 
 // Route::group(['middleware' => 'auth.jwt'], function () {

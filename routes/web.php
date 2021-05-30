@@ -1,16 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\IllustrationGalleryController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\MyIllustrationController;
 
 
-Auth::routes();
+
+// Auth::routes();
 
 Route::get('/', function () {return view('welcome');});
-Route::post('/new-illustration',  [MyIllustrationController::class, 'saveIllus']);
-Route::get('/illustration', [IllustrationGalleryController::class, 'getIllustrationGallery']);
 
 
 
