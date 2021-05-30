@@ -9,6 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MyIllustrationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function saveIllus(Request $request){
 
         // foreach($request->data as $data){
@@ -19,8 +24,8 @@ class MyIllustrationController extends Controller
         //     ]);
         //     $illus->save();
         // }
-        $userId = 1;
 
+        $userId = Auth::user()->id;
         $illus = new MyIllustration();
         $illus->user_id = $userId;
         $illus->name = $request->input('name');
