@@ -143,12 +143,7 @@ export default {
 
     methods: {
         loadIllustration() {
-            const token = this.$store.getters.currentUser.token
-            axios.get('/api/illustration', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            axios.get('/api/illustration')
                 .then(response =>{
                     this.items = response.data.illustrations
                     this.categories = response.data.svg_category
